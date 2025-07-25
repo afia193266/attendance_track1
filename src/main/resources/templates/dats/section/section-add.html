@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Head (all meta link scripts go here ) START -->
+<div th:replace="fragments/head :: head"></div>
+<head>
+  <!-- Select2 -->
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/select2/css/select2.min.css">
+  <title>Section Add</title>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+	<!-- TOP Menu (all meta link scripts go here ) START -->
+	<div th:replace="fragments/topmenu :: topmenu"></div>
+	<!-- TOP Menu (all meta link scripts go here ) END -->
+	<!-- Left side column. contains the sidebar START -->
+	<div th:replace="fragments/menusidebar :: menusidebar"></div>
+	<!-- Left side column. contains the sidebar END -->
+  	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+	<!-- Content Header (Page header) START-->
+	<div th:replace="fragments/contentheader :: contentheader"></div>
+	<!-- Content Header (Page header) END-->
+	
+	<!--  ********  PLEASE DO NOT CHANGE ABOVE CODE ********* -->
+	
+	<!-- Main content START  -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== START -->
+	<!-- Main content -->
+	<section class="content">
+		<div class="small-box bg-red" sec:authorize="!hasAuthority('admin')">
+	     	<div class="inner text-center" style="color: #FFF; font-weight:bold; font-family: 'Open Sans', sans-serif;">
+	             <h4>
+	             <i class="fas fa-skull-crossbones fa-lg"> </i>     
+	             You don't have permission to this page.      
+	             </h4>
+	     	</div>
+      	</div>
+		<div class="container-fluid" sec:authorize="hasAuthority('admin')">
+		    <div class="row">
+       			<div class="col-12">
+					<!-- Default box -->
+					<div class="card card-info">
+			            <div class="card-header">
+			              <h3 class="card-title"> Add New Section</h3>
+			            </div>
+			            <div th:if="${successMessage != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+						  <span th:text="${successMessage}"></span>
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<div th:if="${errorMessage != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+						  <strong th:text="${errorMessage}">You should check in on some of those fields below.</strong> 
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+			            <!-- /.card-header -->
+			            
+						<form class="form-horizontal" action="#" method="post" th:object="${section}"
+						  data-th-action="${editButton != true} ? @{/section-add-save} : @{/section-update-save}">
+                          <div class="card-body">
+                            <input type="hidden" name="id" class="form-control" id="id"  th:field="*{sectionId}"/>
+                                
+                            <div class="form-group row">
+	                          <label class="control-label col-md-3 col-sm-3 col-xs-3" for="name"> <h5><b>Name : <span style="color: red;"> *</span> </b></h5></label>
+	                          <input type="text" class="form-control form-control-lg col-md-4 col-sm-4 col-xs-4" required="required" 
+                                th:field="*{sectionName}" placeholder="Section Name" th:errorclass="fieldError" autofocus="autofocus"/>
+	                        </div>
+	                        <div class="form-group row">
+	                          <label class="control-label col-md-3 col-sm-3 col-xs-3" for="session"> <h5> <b>Session : </b></h5></label>
+	                          <input type="text" class="form-control form-control-lg col-md-4 col-sm-4 col-xs-4" 
+	                      	    th:field="*{session}" th:errorclass="fieldError" placeholder="Session">
+	                        </div>
+	                        <div class="form-group row">
+	                          <label class="control-label col-lg-3 " for="semester"><h5><b>Semester : <span style="color: red;"> *</span>  </b></h5></label>
+	                          <select class="form-select form-select-lg select2 col-lg-4 " th:field="*{semester}" required="required" th:errorclass="fieldError">
+                               <option value="1">1</option> <option value="2">2</option>
+                               <option value="3">3</option> <option value="4">4</option>
+                               <option value="5">5</option> <option value="6">6</option>
+                               <option value="7">7</option> <option value="8">8</option>
+	            		      </select>
+	                        </div>
+	                        <div class="form-group row">
+	                          <label class="control-label col-lg-3 " for="category"><h5><b>Category : <span style="color: red;"> *</span>  </b></h5></label>
+	                          <select class="form-select form-select-lg  col-lg-4 " th:field="*{category}" required="required" th:errorclass="fieldError">
+                               <option value="Female">Female</option> 
+                               <option value="Male">Male</option>
+                               <option value="Other">Other</option> 
+	            		      </select>
+	                        </div>
+                          </div>
+			              <!-- /.card-body -->
+			            	
+				            <div class="card-footer row">
+		                      <div class="col-lg-6">
+							    <a class="btn btn-lg btn-outline-info float-left" href="section.html"> Back </a>
+		                      	<button type="submit" class="btn btn-lg btn-outline-success float-right" name="action" value="save" th:if="${editButton != true}">Save</button>
+		                      	<button type="submit" class="btn btn-lg btn-outline-success float-right" name="action" value="update" th:if="${editButton == true}">Update</button>
+		                      </div>
+		                      <div class="col-lg-3">
+							    <a class="btn btn-lg btn-outline-danger float-left" href="section.html"> Cancel </a>
+		                      </div>
+                            </div>
+                            <!-- /.box-footer -->
+			            </form>
+			            
+			          </div>
+			          <!-- /.card -->
+			          
+			            
+			    </div>
+       			<!-- /.col -->
+      		</div>
+      		<!-- /.row -->	
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== END-->
+	<!-- Main content END  -->
+	<!--  ********  PLEASE DO NOT CHANGE BELOW CODE ********* -->
+	</div>
+	<!-- /.content-wrapper -->
+  <!-- Page footer START-->
+  <div th:replace="fragments/footer :: footer"></div>
+  <!-- Page footer END-->
+	
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- ===================##### Main contain goes here END ============================ -->
+
+<!-- =============================================== -->
+<!-- common script START -->
+<div th:replace="fragments/commonscripts :: commonscripts"></div>
+<!-- common script END -->
+<!-- Select2 -->
+<script src="resources/AdminLTE-master/plugins/select2/js/select2.full.min.js"></script>
+<script type="text/javascript">
+
+	$(function () {
+	  //Initialize Select2 Elements
+	  $('.select2').select2()
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Head (all meta link scripts go here ) START -->
+<div th:replace="fragments/head :: head"/>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+	<!-- TOP Menu (all meta link scripts go here ) START -->
+	<div th:replace="fragments/topmenu :: topmenu"/>
+	<!-- TOP Menu (all meta link scripts go here ) END -->
+	<!-- Left side column. contains the sidebar START -->
+	<div th:replace="fragments/menusidebar :: menusidebar"/>
+	<!-- Left side column. contains the sidebar END -->
+  	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+	<!-- Content Header (Page header) START-->
+	<div th:replace="fragments/contentheader :: contentheader"/>
+	<!-- Content Header (Page header) END-->
+	
+	<!--  ********  PLEASE DO NOT CHANGE ABOVE CODE ********* -->
+	
+	<!-- Main content START  -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== START -->
+	<!-- Main content -->
+	<section class="content">
+	  <div class="small-box bg-red" sec:authorize="!hasAuthority('superadmin')">
+	     	<div class="inner text-center" style="color: #FFF; font-weight:bold; font-family: 'Open Sans', sans-serif;">
+	             <h4>
+	             <i class="fas fa-skull-crossbones fa-lg"> </i>     
+	             You don't have permission to this page.      
+	             </h4>
+	     	</div>
+      	</div>
+		<div class="container-fluid" sec:authorize="hasAuthority('superadmin')">
+		    <div class="row">
+       			<div class="col-12">
+					<!-- Default box -->
+					<div class="card">
+			            <div class="card-header">
+			              <h3 class="card-title">Role Update</h3>
+			            </div>
+			            <div th:if="${successMessage != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+						  <span th:text="${successMessage}"></span>
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<div th:if="${errorMessage != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+						  <strong > You should check in on some of those fields below.</strong>
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+			            <!-- /.card-header -->
+			            <div class="card-body">
+			                 <form class="form-horizontal" action="#" method="post" data-th-action="@{/profile-role-update-save}" th:object="${role}" >
+                            <div class="box-body">
+                                <input type="hidden" name="id" class="form-control" id="id"  th:field="*{id}"/>
+                                
+	                            <div class="form-group row">
+		                          <label class="control-label col-md-3 col-sm-3 col-xs-3" for="name"> <h5><b>Role Name : <span style="color: red;"> *</span> </b></h5></label>
+		                          <input type="text" class="form-control form-control-lg col-md-4 col-sm-4 col-xs-4" required="required" 
+	                                id="name" name="name" th:field="*{name}" placeholder="Name" th:errorclass="fieldError" autofocus="autofocus"/>
+		                          <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="col-md-3 col-sm-3 col-xs-3"></div>
+		                        </div>
+                                
+                                
+                                
+                                <!-- <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="name" class="form-control" id="name"  th:field="*{name}" placeholder="Name"/>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <!-- /.box-body -->
+                            <!-- <div class="card-footer">
+                                <button type="submit" class="btn btn-default" name="action" value="cancel">Cancel</button>
+                                <button type="submit" class="btn btn-info pull-right" name="action" value="update">Update</button>
+                            </div> -->
+                            
+                            <div class="card-footer row">
+		                      <div class="col-lg-6">
+							    <a class="btn btn-lg btn-outline-info float-left" href="profile-role.html"> Back </a>
+		                      	<button type="submit" class="btn btn-lg btn-outline-success float-right" name="action" value="update">Update</button>
+		                      </div>
+		                      <div class="col-lg-3">
+							    <a class="btn btn-lg btn-outline-danger float-left" href="profile-role.html"> Cancel </a>
+		                      </div>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+			            </div>
+			            <!-- /.card-body -->
+			          </div>
+			          <!-- /.card -->
+			          
+			            
+			    </div>
+       			<!-- /.col -->
+      		</div>
+      		<!-- /.row -->	
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== END-->
+	<!-- Main content END  -->
+	<!--  ********  PLEASE DO NOT CHANGE BELOW CODE ********* -->
+	</div>
+	<!-- /.content-wrapper -->
+	
+  <!-- Page footer START-->
+  <div th:replace="fragments/footer :: footer"></div>
+  <!-- Page footer END-->
+	
+	 <!-- Control Sidebar -->
+	<aside class="control-sidebar control-sidebar-dark">
+	  <!-- Control sidebar content goes here -->
+	</aside>
+	<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- ===================##### Main contain goes here END ============================ -->
+
+<!-- =============================================== -->
+<!-- common script START -->
+<div th:replace="fragments/commonscripts :: commonscripts"/>
+<!-- common script END -->
+<!-- jquery-validation -->
+<script src="resources/js/lib/jquery.validate.min.js"></script>
+<script src="resources/js/lib/additional-methods.min.js"></script>
+<!-- page script -->
+<script>
+ 
+</script>
+</body>
+</html>

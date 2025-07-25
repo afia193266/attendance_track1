@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- css files -->
+<head th:fragment="datatable-css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/datatables-colreorder/css/colReorder.bootstrap4.min.css">
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.min.css">
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/datatables-rowreorder/css/rowReorder.bootstrap4.min.css">
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/datatables-searchpanes/css/searchPanes.dataTables.min.css">
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/datatables-select/css/select.dataTables.min.css"> 
+  
+
+  <style>
+	/* .left-col {
+	    float: left;
+	    width: 25%;
+	}
+	 
+	.center-col {
+	    float: left;
+	    width: 50%;
+	}
+	 
+	.right-col {
+	    float: left;
+	    width: 25%;
+	} */
+	
+	div.dataTables_wrapper div.dataTables_length select{ width: 80% !important; font-weight: bolder; font-size: 1rem;}
+	div.dataTables_wrapper div.dataTables_filter label { width: 100% !important;}
+	div.dataTables_wrapper div.dataTables_filter input { width: 100% !important;}
+	
+	.btn-secondary {
+	    color: #fff;
+	    background-color: #2f8693;
+	    border-color: #fff;
+	    box-shadow: none;
+	}
+	.btn-secondary:hover {
+	    color: #fff;
+	    background-color: #0076DF !important;
+	    border-color: #fff !important;
+	}	
+	
+	/* tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }  */
+    
+    table.dataTable th, td {
+	  white-space: nowrap
+	}
+  </style>
+
+</head>
+
+<body>
+
+
+  <div th:fragment="datatable-scripts">
+	
+	<!-- DataTables  & Plugins -->
+	<script src="resources/AdminLTE-master/plugins/datatables/jquery.dataTables.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/jszip/jszip.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/pdfmake/pdfmake.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/pdfmake/vfs_fonts.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-colreorder/js/dataTables.colReorder.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-rowreorder/js/dataTables.rowReorder.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-searchpanes/js/dataTables.searchPanes.min.js"></script>
+	<script src="resources/AdminLTE-master/plugins/datatables-select/js/dataTables.select.min.js"></script>
+	
+	<script type="text/javascript">
+	$(".message").fadeOut(90000, "linear");
+	
+	/* $(function () {
+        var table = $("#dataTable").DataTable(
+            {
+                responsive: true
+            });
+    }); */
+    
+    /* $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+    	   $($.fn.dataTable.tables(true)).DataTable()
+    	      .scroller.measure();
+    }); */
+    
+    /* $(window).resize(function() {
+    	  alert('window was resized');
+    	  console.log('window was resized');
+    }); */
+    
+    /* $(document).width().resize(function() {
+    	  alert('window was resized');
+    	  console.log('window was resized');
+    }); */
+    
+
+    
+    $(document).ready(function () {
+    	
+        // Setup - add a text input to each footer cell
+        $('#dataTable tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" class="form-control"  placeholder="Search ' + title + '" />');
+        });
+        
+
+        /* var table = $('#dataTable').DataTable();
+
+
+        $('#dataTable thead tr#filterboxrow th').each(function() {
+
+            var title = $('#example thead tr#filterboxrow th').eq($(this).index()).text();
+
+            $(this).html('<input id="input' + $(this).index() + '" type="text" class="form-control" placeholder="filter by ' + title + '" />')
+                .css('padding-left', '4px');
+            $(this).on('keyup change', function() {
+                table.column($(this).index()).search($('#input' + $(this).index()).val()).draw();
+            });
+        }); */
+        
+		$('#dataTable').DataTable({
+			
+            initComplete: function () {
+                // Apply the search
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var that = this;
+     
+                        $('input', this.footer()).on('keyup change clear', function () {
+                            if (that.search() !== this.value) {
+                                that.search(this.value).draw();
+                            }
+                        });
+                    });
+            },
+
+	          // dom: 'lBfrtip',
+	          /* "dom": '<"top"<"left-col"l><"center-col"B><"right-col"f>>rtip', */
+	          /* searchPanes: {
+		            viewTotal: true,
+		            layout: 'columns-6'
+		      }, */
+		      "paging": true,
+		      "lengthChange": true,
+		      "searching": true,
+		      "ordering": true,
+		      "info": true,
+		      "autoWidth": false,
+		      "responsive": false,
+		      "fixedHeader": false,
+		      "colReorder": true,
+		      "rowReorder": true,
+		      "scrollX": true,
+		      "lengthMenu": [
+		            /* [-1, 10, 25, 50, 100],
+		            ['All', 10, 25, 50, 100], */
+		    	    [10, 25, 50, 100, -1],
+		            [10, 25, 50, 100, 'All',],
+		        ],
+		       //"language": { search: "" },
+		       "language": { 
+		           search: "_INPUT_",
+		           searchPlaceholder: "Search..." },
+		       
+
+
+		      //"buttons": ["excel", "pdf", "print", "colvis"] /* "copy", "csv",  */
+		      
+		      
+	    /* responsive: {
+	        details: {
+	        	//using modal
+	            display: $.fn.dataTable.Responsive.display.modal( {
+	                header: function ( row ) {
+	                    var data = row.data();
+	                    return 'Details for '+data.clientName;
+	                }
+	            } ) 
+	            
+	
+	            display: $.fn.dataTable.Responsive.display.childRowImmediate,
+	            type: 'inline' 
+	        }
+	    }, */
+	
+		      buttons: [
+		             /* {
+		                extend: 'searchPanes',
+		                config: {
+		                    cascadePanes: true,
+		                    //viewTotal: true,
+		                    layout: 'columns-3',
+		                    targets: [4, 5, 8]
+		                }
+		            },  */
+		            {
+		                extend: 'copyHtml5',
+		                exportOptions: {
+		                    //columns: [ 0, ':visible' ]
+		                    columns: ':visible'
+		                }
+		            },
+		            /* {
+		                extend: 'excelHtml5',
+		                exportOptions: {
+		                    //columns: ':visible'
+		                    columns: [ 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+		                }
+		            }, */
+		            {
+		                extend: 'print',
+		                exportOptions: {
+		                    /* columns: [ 0, 1, 2, 5 ] */
+	                		columns: ':visible'
+		                }
+		            },
+		            //'colvis',
+		            { extend: 'colvis', text: 'Show/Hide Column' },
+		            
+		            {
+                        extend: 'colvisGroup',
+                        text: 'Hide all',
+                        hide: ':visible'
+                    },
+                    {
+                        extend: 'colvisGroup',
+                        text: 'Show all',
+                        show: ':hidden'
+                    },
+		            {
+		                extend: 'excelHtml5',
+		                exportOptions: {
+		                    columns: ':visible'
+		                },
+		                text: 'Export selected'
+		            },
+		        ],
+		        "dom":  /* "<'row'<'col-sm-12'P>>" + */
+		    	  	  "<'row'<'col-sm-12 col-lg-3'l><'col-sm-12 col-lg-6'B> <'col-sm-12 col-lg-3'f>>" +
+		          	  "<'row'<'col-sm-12'tr>>" +
+		           	  "<'row'<'col-sm-12 col-lg-5'i><'col-sm-12 col-lg-7'p>>",
+		//}).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+		});
+     
+        // DataTable
+       /*  var table = $('#dataTable').DataTable({
+            
+            
+        }); */
+    });
+	    
+	</script>
+
+  </div>
+
+</body>
+</html>

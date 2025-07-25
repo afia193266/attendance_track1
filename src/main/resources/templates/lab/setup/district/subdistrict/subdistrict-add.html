@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Head (all meta link scripts go here ) START -->
+<div th:replace="fragments/head :: head"></div>
+<head>
+	<title th:text="${editButton != true} ? 'New Upazilla' : 'Update Upazilla'"></title>
+
+  <!-- Select2 -->
+  <link rel="stylesheet" href="resources/css/select2.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+	<!-- TOP Menu (all meta link scripts go here ) START -->
+	<div th:replace="fragments/topmenu :: topmenu"></div>
+	<!-- TOP Menu (all meta link scripts go here ) END -->
+	<!-- Left side column. contains the sidebar START -->
+	<div th:replace="fragments/menusidebar :: menusidebar"></div>
+	<!-- Left side column. contains the sidebar END -->
+  	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+	<!-- Content Header (Page header) START-->
+	<div th:replace="fragments/contentheader :: contentheader"></div>
+	<!-- Content Header (Page header) END-->
+	
+	<!--  ********  PLEASE DO NOT CHANGE ABOVE CODE ********* -->
+	
+	<!-- Main content START  -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== START -->
+	<!-- Main content -->
+	<section class="content">
+	   <div class="small-box bg-red" sec:authorize="!hasAuthority('admin')">
+	     	<div class="inner text-center" style="color: #FFF; font-weight:bold; font-family: 'Open Sans', sans-serif;">
+	             <h4>
+	             <i class="fas fa-skull-crossbones fa-lg"> </i>     
+	             You don't have permission to this page.      
+	             </h4>
+	     	</div>
+      	</div>
+		<div class="container-fluid" sec:authorize="hasAuthority('admin')">
+		    <div class="row">
+       			<div class="col-12">
+					<!-- Default box -->
+					<div class="card card-info">
+			            <div class="card-header">
+			              <h3 class="card-title"> Add New Upazilla</h3>
+			            </div>
+			            <div th:if="${successMessage != null}" class="alert alert-success alert-dismissible fade show message" role="alert">
+						  <span th:text="${successMessage}"></span>
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<div th:if="${errorMessage != null}" class="alert alert-danger alert-dismissible fade show message" role="alert">
+						  <!-- <strong >You should check in on some of those fields below.</strong> --> 
+						  <span th:text="${errorMessage}"></span>
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+			            <!-- /.card-header -->
+			            <div class="card-body">
+			              <form class="form-horizontal" action="#" method="post" th:object="${subdistrict}"
+			              	data-th-action="${editButton != true} ? @{/subdistrict-add-save} : @{/subdistrict-update-save}" >
+                            <div class="box-body">
+                                <input type="hidden" class="form-control"  th:field="*{subDistrictId}"/>
+                                
+	                            <div class="form-group row">
+		                          <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-3" for="subDistrictName"> <h5><b> District Name : <span style="color: red;"> *</span> </b></h5></label>
+		                          <select class="form-select form-select-lg select2 col-lg-3" th:field="*{districtId}">
+								  	<option value="0">Select One</option>
+			                      	<option th:each="district : ${districtList}" th:text="${district.districtName}"
+			                      			th:value="${district.districtId}"> </option>
+			           		      </select> 
+		                        </div>
+                                
+                                
+                        
+                                
+	                            <div class="form-group row">
+		                          <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-3" for="subDistrictName"> <h5><b>Upazilla Name : <span style="color: red;"> *</span> </b></h5></label>
+		                          <input type="text" class="form-control form-control-lg col-lg-3 col-md-4 col-sm-4 col-xs-4" required="required" 
+		                            th:field="*{subDistrictName}" placeholder="Name" th:errorclass="fieldError" autofocus="autofocus"/>
+		                          <div th:if="${#fields.hasErrors('subDistrictName')}" th:errors="*{subDistrictName}" class="col-md-3 col-sm-3 col-xs-3"></div>
+		                        </div>
+		                        
+	                            <div class="form-group row">
+		                          <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-3" for="description"> <h5><b>Description : </b></h5></label>
+		                          <input type="text" class="form-control form-control-lg col-lg-3 col-md-4 col-sm-4 col-xs-4" 
+		                            th:field="*{description}" placeholder="Description" th:errorclass="fieldError"/>
+		                          <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="col-md-3 col-sm-3 col-xs-3"></div>
+		                        </div>
+		                        
+	                            <div class="form-group row">
+		                          <label class="control-label col-lg-3 col-md-3 col-sm-3 col-xs-3" for="description"> <h5><b>Remarks : </b></h5></label>
+		                          <input type="text" class="form-control form-control-lg col-lg-3 col-md-4 col-sm-4 col-xs-4" 
+		                            th:field="*{remarks}" placeholder="Remarks" th:errorclass="fieldError"/>
+		                          <div th:if="${#fields.hasErrors('remarks')}" th:errors="*{remarks}" class="col-md-3 col-sm-3 col-xs-3"></div>
+		                        </div>
+                            </div>
+			            	
+				            <div class="card-footer row">
+		                      <div class="col-lg-6">
+							    <a class="btn btn-lg btn-outline-info float-left" href="/subdistrict.html"> Back </a>
+		                      	<button type="submit" class="btn btn-lg btn-outline-success float-right" name="action" value="save" th:if="${editButton != true}">Save</button>
+		                      	<button type="submit" class="btn btn-lg btn-outline-success float-right" name="action" value="update" th:if="${editButton == true}">Update</button>
+		                      </div>
+		                      <div class="col-lg-3">
+							    <a class="btn btn-lg btn-outline-danger float-left" href="#"> Cancel </a>
+		                      </div>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+			            </div>
+			            <!-- /.card-body -->
+			          </div>
+			          <!-- /.card -->
+			          
+			            
+			    </div>
+       			<!-- /.col -->
+      		</div>
+      		<!-- /.row -->	
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== END-->
+	<!-- Main content END  -->
+	<!--  ********  PLEASE DO NOT CHANGE BELOW CODE ********* -->
+	</div>
+	<!-- /.content-wrapper -->
+	
+  <!-- Page footer START-->
+  <div th:replace="fragments/footer :: footer"></div>
+  <!-- Page footer END-->
+	
+	 <!-- Control Sidebar -->
+	<aside class="control-sidebar control-sidebar-dark">
+	  <!-- Control sidebar content goes here -->
+	</aside>
+	<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- ===================##### Main contain goes here END ============================ -->
+
+<!-- =============================================== -->
+<!-- common script START -->
+<div th:replace="fragments/commonscripts :: commonscripts"></div>
+<!-- common script END -->
+<!-- Select2 -->
+<script src="resources/js/select2.full.min.js"></script>
+<script>
+	$('.select2').select2();
+
+	$(".message").fadeOut(30000, "linear");
+ 
+</script>
+</body>
+</html>

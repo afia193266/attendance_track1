@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Head (all meta link scripts go here ) START -->
+<div th:replace="fragments/head :: head"></div>
+<head>
+  <!-- Select2 -->
+  <!--<link rel="stylesheet" href="resources/AdminLTE-master/plugins/select2/css/select2.min.css">-->
+  <link rel="stylesheet" href="resources/css/select2.min.css">
+  <link rel="stylesheet" href="resources/css/select2-bootstrap4.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  
+  <title>Details Attendance Report</title>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+	<!-- TOP Menu (all meta link scripts go here ) START -->
+	<div th:replace="fragments/topmenu :: topmenu"></div>
+	<!-- TOP Menu (all meta link scripts go here ) END -->
+	<!-- Left side column. contains the sidebar START -->
+	<div th:replace="fragments/menusidebar :: menusidebar"></div>
+	<!-- Left side column. contains the sidebar END -->
+  	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+	<!-- Content Header (Page header) START-->
+	<!--<div th:replace="fragments/contentheader :: contentheader"></div>-->
+	<!-- Content Header (Page header) END-->
+	
+	<!--  ********  PLEASE DO NOT CHANGE ABOVE CODE ********* -->
+	
+	<!-- Main content START  -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== START -->
+	<!-- Main content -->
+	<section class="content">
+		<div class="small-box bg-red" sec:authorize="!hasAuthority('student')">
+	     	<div class="inner text-center" style="color: #FFF; font-weight:bold; font-family: 'Open Sans', sans-serif;">
+	             <h4>
+	             <i class="fas fa-skull-crossbones fa-lg"> </i>     
+	             You don't have permission to this page.      
+	             </h4>
+	     	</div>
+      	</div>
+		<div class="container-fluid" sec:authorize="hasAuthority('student')">
+		    <div class="row">
+       			<div class="col-12">
+					<!-- Default box -->
+					<div class="card card-info">
+			            <div class="card-header">
+			              <h3 class="card-title"> Attendance Report</h3>
+			            </div>
+			            <div th:if="${successMessage != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+						  <span th:text="${successMessage}"></span>
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<div th:if="${errorMessage != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+						  <strong th:text="${errorMessage}">You should check in on some of those fields below.</strong> 
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+			            <!-- /.card-header -->
+			            
+                          <div class="card-body">
+                            <!--<input type="hidden" name="id" class="form-control" id="id"  th:field="*{course.courseId}"/>
+                                
+                            <div class=" row">
+							  <div class="form-group row col-lg-6">
+								<h5>Course Name : </h5>
+								<h5><b th:text="${attendanceReport.course.courseName}"></b></h5>
+	                          </div>
+							  <div class="form-group row col-lg-4">
+								<h5>Course Code : </h5>
+								<h5><b th:text="${attendanceReport.course.courseCode}"></b></h5>
+	                          </div>
+							  <div class="form-group row col-lg-2">
+								<h5> Credit : </h5>
+								<h5><b th:text="${attendanceReport.course.credit}"></b></h5>
+	                          </div>
+							</div>  
+							
+                            <div class="row">
+							  <div class="form-group row col-lg-6">
+								<h5>Section : </h5>
+								<h5><b ></b></h5>
+	                          </div>
+							  <div class="form-group row col-lg-4">
+								<h5>Total Class : </h5>
+								<h5><b th:text="${attendanceReport.totalClass}"></b></h5>
+	                          </div>
+							</div>  -->
+	                        
+	                        
+				              <table class="table table-bordered" id="courseTable">
+								<thead>
+			                      <tr>
+			                        <th>SL</th>
+			                        <th>ID</th>
+			                        <th th:each="as, itr: ${ad.atdSumList}"> 
+			                        	<p th:text="${as.attdDate }"> </p>
+			                        	<p th:text="${'Classes: ' + as.classes}"> </p>
+			                        </th>
+			                        <th>Action</th>
+			                      </tr>
+								</thead>
+								<tbody>
+			                        <tr th:each="std, itr: ${ad.stdList}">
+			                        <td th:text="${itr.count}">SL</td>
+			                        <td th:text="${std.username}">ID</td>
+			                        <!-- <td th:text="${attd.totalPresent}">Total Present</td>
+			                        <td th:text="${attd.percentage + ' %'}">Percentage</td>
+			                         <td>
+			                            <a th:href="@{/attendance-details.html(courseId=${attendanceReport.course.courseId}, studentId=${attd.studentId})}" 
+			                               class="btn btn-sm btn-outline-warning" > 
+			                              <i class="fas fa-pencil-alt"></i>  Details</a>
+			                        </td>-->
+			                      </tr> 
+								</tbody>
+								<tfoot>
+								  <tr>
+			                        <th>SL</th>
+			                        <th>ID</th>
+			                        <th th:each="as, itr: ${ad.atdSumList}"> 
+			                        	<p th:text="${as.attdDate }"> </p>
+			                        	<p th:text="${'Classes: ' + as.classes}"> </p>
+			                        </th>
+			                        <th>Action</th>
+								  </tr>
+								</tfoot>
+							  </table>
+	                        
+                          </div>
+			            
+			          </div>
+			          <!-- /.card -->
+			          
+			            
+			    </div>
+       			<!-- /.col -->
+      		</div>
+      		<!-- /.row -->	
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== END-->
+	<!-- Main content END  -->
+	<!--  ********  PLEASE DO NOT CHANGE BELOW CODE ********* -->
+	</div>
+	<!-- /.content-wrapper -->
+  <!-- Page footer START-->
+  <div th:replace="fragments/footer :: footer"></div>
+  <!-- Page footer END-->
+	
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- ===================##### Main contain goes here END ============================ -->
+
+<!-- =============================================== -->
+<!-- common script START -->
+<div th:replace="fragments/commonscripts :: commonscripts"></div>
+<!-- common script END -->
+<!-- Select2 -->
+<script src="resources/AdminLTE-master/plugins/select2/js/select2.full.min.js"></script>
+<!-- Moment -->
+<script src="resources/AdminLTE-master/plugins/moment/moment.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="resources/AdminLTE-master/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<script type="text/javascript">
+
+	$(function () {
+	  //Initialize Select2 Elements
+	  $('.select2').select2()
+	});
+	
+	//Date picker
+    $('#attdDate').datetimepicker({
+        format: 'DD/MM/YYYY',
+        defaultDate: new Date()
+    }); 
+</script>
+</body>
+</html>

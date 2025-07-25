@@ -1,0 +1,83 @@
+input, select {
+    border-radius: 0 !important;
+} 
+
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+	    /* display: none; <- Crashes Chrome on hover */
+	    -webkit-appearance: none;
+	    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+	}
+	
+	input[type=number] {
+	    -moz-appearance:textfield; /* Firefox */
+	}
+	input[type=radio] {
+  		transform: scale(1.5);
+	}
+	
+	input:focus ~ .floating-label,
+	input:not(:focus):valid ~ .floating-label{
+	  top: 0px;
+	  bottom: 10px;
+	  left: 10px;
+	  font-size: .7rem;
+	  opacity: 1;
+	  font-weight: bolder;
+	  font-stretch: 200%;
+	}
+	
+	.inputText {
+	  /* font-size: 14px;
+	  width: 200px;
+	  height: 35px; */
+	}
+	
+	.floating-label {
+	  position: absolute;
+	  pointer-events: none;
+	  left: 25px;
+	  top: 10px;
+	  transition: 0.2s ease all;
+	}
+	
+	/* input:focus ~ .floating-label-required,
+	input:not(:focus):valid ~ .floating-label-required{
+	  top: 0px;
+	  bottom: 10px;
+	  left: 10px;
+	  font-size: .7rem;
+	  opacity: 1;
+	  font-weight: bolder;
+	  font-stretch: 200%;
+	}
+	
+	.floating-label-required {
+	  position: absolute;
+	  pointer-events: none;
+	  left: 25px;
+	  top: 10px;
+	  transition: 0.2s ease all;
+	} */
+	input[type=text] {
+	    text-transform: uppercase !important;
+	}
+	.btns{
+		margin-left: 15px !important;
+		margin-right: 15px !important;
+	}
+	.disabled{ pointer-events: none; }
+	
+	.card-title {
+    	font-size: 1.4rem !important;
+    }
+    
+    .test-label{
+    position: absolute;
+    top: 6px;
+    left: 20px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background: #fff;
+}

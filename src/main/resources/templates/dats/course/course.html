@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Head (all meta link scripts go here ) START -->
+<div th:replace="fragments/head :: head"></div>
+<head>
+<style>
+
+.errorFont
+{
+   font-size: 15px;
+}
+
+</style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- TOP Menu (all meta link scripts go here ) START -->
+  <div th:replace="fragments/topmenu :: topmenu"></div>
+  <!-- TOP Menu (all meta link scripts go here ) END -->
+  <!-- Left side column. contains the sidebar START -->
+  <div th:replace="fragments/menusidebar :: menusidebar"></div>
+  <!-- Left side column. contains the sidebar END -->
+    <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+  <!-- Content Header (Page header) START-->
+  <div th:replace="fragments/contentheader :: contentheader"></div>
+  <!-- Content Header (Page header) END-->
+  
+  <!--  ********  PLEASE DO NOT CHANGE ABOVE CODE ********* -->
+  
+  <!-- Main content START  -->
+  <!--   ============ YOUR CODE WILL GO HERE =========== START -->
+  <course class="content">
+    <div class="small-box bg-red" sec:authorize="!hasAuthority('admin')">
+      <div class="inner text-center" style="color: #FFF; font-weight:bold; font-family: 'Open Sans', sans-serif;">
+        <h4> <i class="fas fa-skull-crossbones fa-lg"> </i>     
+             You don't have permission to this page.    
+        </h4>
+      </div>
+    </div>
+    <div class="container-fluid" sec:authorize="hasAuthority('admin')">
+      <div class="row">
+        <div class="col-12 col-lg-12">
+          <!-- jquery validation -->
+          <div class="card card-info">
+            <div class="card-header">
+              <h3 class="card-title"> Course Details </h3>
+            </div>
+            <div th:if="${successMessage != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+			  <span th:text="${successMessage}"></span>
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div th:if="${errorMessage != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+			  <strong >You should check in on some of those fields below.</strong> 
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+            <!-- /.card-header -->
+            
+            <!-- form start -->
+            <div class="card-body">
+              <div style="padding-bottom:20px;" sec:authorize="hasAuthority('admin')">
+			    <a class="btn btn-outline-info btn-lg" href="course-add.html">
+				  <strong> Add New Course </strong>
+			    </a>
+			  </div>
+	            <div class="col-lg-12">
+	              <table class="table table-bordered" id="courseTable">
+					<thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Credit</th>
+                        <th>Semester</th>
+                        <th>Actions</th>
+                      </tr>
+					</thead>
+					<tbody>
+                      <tr th:each="course : ${courseList}">
+                        <td th:text="${course.courseId}">ID</td>
+                        <td th:text="${course.courseName}">Name</td>
+                        <td th:text="${course.courseCode}">Code</td>
+                        <td th:text="${course.credit}">Credit</td>
+                        <td th:text="${course.semester}">Semester</td>
+                        <td >
+                            <a th:href="@{/course-update.html(id=${course.courseId})}" 
+                              class="btn btn-sm btn-outline-warning" > <i class="fas fa-pencil-alt"></i>  Edit</a>
+                            <a th:href="@{/course-delete.html(id=${course.courseId})}"
+                               class="btn btn-sm btn-outline-danger" 
+                               onclick="return confirm('Are you sure you want to delete this course?');"> 
+                               <i class="fas fa-trash"></i> Delete</a>
+                        </td >
+                      </tr>
+					</tbody>
+					<tfoot>
+					  <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Code</th>
+                        <th>Credit</th>
+                        <th>Semester</th>
+                        <th>Actions</th>
+					  </tr>
+					</tfoot>
+				  </table>
+	            </div>
+	            <!--  /#courseTable -->
+            </div>
+            <!--  /.card-body -->
+          </div>
+        </div>
+        <!--/.col (left) -->
+      </div>
+      <!-- /.row -->  
+    </div>
+    <!-- /.container-fluid -->
+  </course>
+  <!-- /.content -->
+  <!--   ============ YOUR CODE WILL GO HERE =========== END-->
+  <!-- Main content END  -->
+  <!--  ********  PLEASE DO NOT CHANGE BELOW CODE ********* -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- Page footer START-->
+  <div th:replace="fragments/footer :: footer"></div>
+  <!-- Page footer END-->
+   <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- ===================##### Main contain goes here END ============================ -->
+
+<!-- =============================================== -->
+<!-- common script START -->
+<div th:replace="fragments/commonscripts :: commonscripts"></div>
+<!-- common script END -->
+<!-- DataTables -->
+<script src="resources/js/lib/jquery.dataTables.js"></script>
+<script src="resources/js/lib/dataTables.bootstrap4.js"></script>
+
+<script type="text/javascript">
+	$("#message").fadeOut(4000, "linear");
+	
+	$(function () {
+        var table = $("#courseTable").DataTable(
+            {
+                responsive: true
+            });
+    });
+</script>
+
+ </body>
+</html>

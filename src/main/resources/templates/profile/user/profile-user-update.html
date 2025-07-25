@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Head (all meta link scripts go here ) START -->
+<div th:replace="fragments/head :: head"/>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+	<!-- TOP Menu (all meta link scripts go here ) START -->
+	<div th:replace="fragments/topmenu :: topmenu"/>
+	<!-- TOP Menu (all meta link scripts go here ) END -->
+	<!-- Left side column. contains the sidebar START -->
+	<div th:replace="fragments/menusidebar :: menusidebar"/>
+	<!-- Left side column. contains the sidebar END -->
+  	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+	<!-- Content Header (Page header) START-->
+	<div th:replace="fragments/contentheader :: contentheader"/>
+	<!-- Content Header (Page header) END-->
+	
+	<!--  ********  PLEASE DO NOT CHANGE ABOVE CODE ********* -->
+	
+	<!-- Main content START  -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== START -->
+	<!-- Main content -->
+	<section class="content">
+		<div class="small-box bg-red" sec:authorize="!hasAuthority('admin')">
+	     	<div class="inner text-center" style="color: #FFF; font-weight:bold; font-family: 'Open Sans', sans-serif;">
+	             <h4>
+	             <i class="fas fa-skull-crossbones fa-lg"> </i>     
+	             You don't have permission to this page.      
+	             </h4>
+	     	</div>
+      	</div>
+		<div class="container-fluid" sec:authorize="hasAuthority('admin')">
+		    <div class="row">
+       			<div class="col-12">
+					<!-- Default box -->
+					<div class="card card-info">
+			            <div class="card-header">
+			              <h3 class="card-title">User Update</h3>
+			            </div>
+			            <div th:if="${successMessage != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+						  <span th:text="${successMessage}"></span>
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<div th:if="${errorMessage != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+						  <strong>You should check in on some of those fields below.</strong> 
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<h5 class="row justify-content-center col-lg-12 " style="color: red;">Note: ** Use new password if you forgot password </h5>
+			            <!-- /.card-header -->
+			            
+						<form class="form-horizontal" action="#" method="post" data-th-action="@{/profile-user-update-save}" th:object="${user}" >
+                            <div class="card-body">
+                                <input type="hidden" name="id" class="form-control" id="id"  th:field="*{id}"/>
+                                
+                            <div class="form-group row">
+	                          <label class="control-label col-md-3 col-sm-3 col-xs-3" for="username"> <h5><b>Full Name: <span style="color: red;"> *</span> </b></h5></label>
+	                          <input type="text" class="form-control form-control-lg col-md-4 col-sm-4 col-xs-4" required="required" 
+                                id="username" name="username" th:field="*{name}" placeholder="Full Name" th:errorclass="fieldError" autofocus="autofocus"/>
+	                          <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="col-md-3 col-sm-3 col-xs-3"></div>
+	                        </div>       
+                            <div class="form-group row">
+	                          <label class="control-label col-md-3 col-sm-3 col-xs-3" for="username"> <h5><b>Username/ID: <span style="color: red;"> *</span> </b></h5></label>
+	                          <input type="text" class="form-control form-control-lg col-md-4 col-sm-4 col-xs-4" required="required" 
+                                id="username" name="username" th:field="*{username}" placeholder="Username" th:errorclass="fieldError" autofocus="autofocus"/>
+	                          <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="col-md-3 col-sm-3 col-xs-3"></div>
+	                        </div>
+	                        <div class="form-group row">
+	                          <label class="control-label col-md-3 col-sm-3 col-xs-3" for="password"> <h5> <b>Password : <span style="color: red;"> *</span> </b></h5></label>
+	                          <input type="password" class="form-control form-control-lg col-md-4 col-sm-4 col-xs-4" required="required" 
+	                      	    name="password" id="password" th:field="*{password}" th:errorclass="fieldError">
+	                          <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="col-md-3 col-sm-3 col-xs-3"></div>
+	                        </div>
+	                        <div class="form-group row">
+	                          <label class="control-label col-md-3 col-sm-3 col-xs-3" for="confirm"> <h5> <b>Confirm : <span style="color: red;"> *</span> </b></h5></label>
+	                          <input type="password" class="form-control form-control-lg col-md-4 col-sm-4 col-xs-4" required="required" 
+	                      	    name="confirm" id="confirm" th:field="*{confirm}" th:errorclass="fieldError">
+	                          <div th:if="${#fields.hasErrors('confirm')}" th:errors="*{confirm}" class="col-md-3 col-sm-3 col-xs-3"></div>
+	                        </div>
+	                        <div class="form-group row">
+	                          <label class="control-label col-md-3 col-sm-3 col-xs-3" for="email"> <h5> <b>Email : </b></h5></label>
+	                          <input type="email" class="form-control form-control-lg col-md-4 col-sm-4 col-xs-4" 
+	                      	    name="email" id="email" th:field="*{email}" th:errorclass="fieldError" placeholder="Email">
+	                          <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="col-md-3 col-sm-3 col-xs-3"></div>
+	                        </div>
+	                      <div class="form-group row">
+	                        <label class="control-label col-lg-3 " for="sectionId"><h5><b>Section (for student) : <span style="color: red;"> *</span>  </b></h5></label>
+	                        <select class="form-select form-select-lg select2 col-lg-4 " th:field="*{sectionId}" required="required" th:errorclass="fieldError">
+                               <option th:each="section : ${sectionList}"
+                                       th:value="${section.sectionId}"
+                                       th:text="${section.sectionName}">Section</option>
+	            		    </select>
+	            		  </div>
+	                      <div class="form-group row">
+	                        <label class="control-label col-lg-3 " for="type"><h5><b>Type : <span style="color: red;"> *</span>  </b></h5></label>
+	                        <select class="form-select form-select-lg  col-lg-4 " th:field="*{type}" id="type" required="required" th:errorclass="fieldError">
+                               <option value="Student">Student</option>
+                               <option value="Teacher">Teacher</option>
+	            		    </select>
+	                      </div>
+	                      <div class="form-group row">
+	                        <label class="control-label col-md-3 col-sm-3 col-xs-3 " for="enabled"><h5><b>Enabled : <span style="color: red;"> *</span>  </b></h5></label>
+	                        <select class="form-select form-select-lg select2 col-md-4 col-sm-4 col-xs-4" th:field="*{enabled}" id="enabled" required="required" th:errorclass="fieldError">
+                               <option th:each="enabled : ${allEnabled}"
+                                       th:value="${enabled}"
+                                       th:text="${enabled}">Enabled</option>
+	            		    </select>
+	                        <div th:if="${#fields.hasErrors('enabled')}" th:errors="*{enabled}" class="col-md-3 col-sm-3 col-xs-3" th:errorclass="error"></div>
+	                      </div>
+	                      
+	                        <div class="form-group row">
+	                          <label class="control-label col-md-3 col-sm-3 col-xs-3" for="Roles"> <h5> <b>Select Roles : <span style="color: red;"> *</span>  </b></h5></label>
+	                          <div class="form-group col-md-4 col-sm-4 col-xs-4">
+		                        <div class="custom-control custom-checkbox " th:each="role, stat : *{roles}" th:if="${role.name} != 'superadmin'">
+                                    <input type="hidden" th:field="*{roles[__${stat.index}__].name}" />
+                                    <input type="checkbox" th:field="*{roles[__${stat.index}__].selected}" />
+                                    <label class="col-sm-4 control-label" th:text="${role.name}">Name</label>
+                                    <!-- <div class="col-sm-2">
+                                    </div> -->
+		                        </div>
+		                      </div>
+	                        </div>
+                                
+                                <!-- <div class="form-group">
+                                    <label for="username" class="col-sm-2 control-label">Username</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="username" class="form-control" id="username"  th:field="*{username}" placeholder="Username"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="tempPassword" class="form-control" id="tempPassword"  th:field="*{tempPassword}"/>
+                                    <label for="username" class="col-sm-2 control-label">Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" name="password" class="form-control" id="password"  th:field="*{password}" placeholder="Password"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm" class="col-sm-2 control-label">Confirm</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" name="confirm" class="form-control" id="confirm"  th:field="*{confirm}" placeholder="Confirm"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="email" class="form-control" id="email"  th:field="*{email}" placeholder="Email"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="enabled" class="col-sm-2 control-label">Enabled</label>
+                                    <div class="col-sm-10">
+                                        <select th:field="*{enabled}" id="enabled">
+                                            <option th:each="enabled : ${allEnabled}"
+                                                    th:value="${enabled}"
+                                                    th:text="${enabled}">Enabled</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div th:each="role, stat : *{roles}">
+                                    <div class="form-group">
+                                        <input type="hidden" th:field="*{roles[__${stat.index}__].name}" />
+                                        <label class="col-sm-4 control-label" th:text="${role.name}">Name</label>
+                                        <div class="col-sm-2">
+                                            <input type="checkbox" th:field="*{roles[__${stat.index}__].selected}" />
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <!-- /.box-body -->
+                            <!-- <div class="card-footer">
+                                <button type="submit" class="btn btn-default" name="action" value="cancel">Cancel</button>
+                                <button type="submit" class="btn btn-info pull-right" name="action" value="update">Update</button>
+                            </div> -->
+                            
+                            <div class="card-footer row">
+		                      <div class="col-lg-6">
+							    <a class="btn btn-lg btn-outline-info float-left" href="profile-user.html"> Back </a>
+		                      	<button type="submit" class="btn btn-lg btn-outline-success float-right" name="action" value="update">Update</button>
+		                      </div>
+		                      <div class="col-lg-3">
+							    <a class="btn btn-lg btn-outline-danger float-left" href="profile-user.html"> Cancel </a>
+		                      </div>
+                                <!-- <button type="submit" class="btn btn-default" name="action" value="cancel">Cancel</button>
+                                <button type="submit" class="btn btn-info float-right" name="action" value="update">Add</button> -->
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+			          </div>
+			          <!-- /.card -->
+			          
+			            
+			    </div>
+       			<!-- /.col -->
+      		</div>
+      		<!-- /.row -->	
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== END-->
+	<!-- Main content END  -->
+	<!--  ********  PLEASE DO NOT CHANGE BELOW CODE ********* -->
+	</div>
+	<!-- /.content-wrapper -->
+	
+  <!-- Page footer START-->
+  <div th:replace="fragments/footer :: footer"></div>
+  <!-- Page footer END-->
+	
+	 <!-- Control Sidebar -->
+	<aside class="control-sidebar control-sidebar-dark">
+	  <!-- Control sidebar content goes here -->
+	</aside>
+	<!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- ===================##### Main contain goes here END ============================ -->
+
+<!-- =============================================== -->
+<!-- common script START -->
+<div th:replace="fragments/commonscripts :: commonscripts"/>
+<!-- common script END -->
+<!-- DataTables -->
+<script src="resources/js/lib/jquery.dataTables.js"></script>
+<script src="resources/js/lib/dataTables.bootstrap4.js"></script>
+<!-- jquery-validation -->
+<script src="resources/js/lib/jquery.validate.min.js"></script>
+<script src="resources/js/lib/additional-methods.min.js"></script>
+<!-- page script -->
+<script>
+
+$(function () {
+    var table = $("#profileDatatable").DataTable(
+        {
+            responsive: true
+        });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+[
+	{
+		"requestUrl": "/",
+		"menuName": "Dashboard",
+		"menuGroupName": "Dashboard",
+		"menuSubGroupName": "Dashboard",
+		"title": "Dashboard",
+		"contentTitle": "Dashboard",
+		"contentSubTitle": "Dashboard",
+		"contentPath": "Dashboard",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "Dashboard"
+	},
+	{
+		"requestUrl": "profile-user.html",
+		"menuName": "User",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "User",
+		"title": "User",
+		"contentTitle": "User",
+		"contentSubTitle": "User",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "User"
+	},
+	{
+		"requestUrl": "profile-user-add.html",
+		"menuName": "User",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "User",
+		"title": "User",
+		"contentTitle": "User",
+		"contentSubTitle": "New User",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "New User"
+	},
+	{
+		"requestUrl": "profile-user-add-save",
+		"menuName": "User",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "User",
+		"title": "User",
+		"contentTitle": "User",
+		"contentSubTitle": "New User",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "New User"
+	},
+	{
+		"requestUrl": "profile-user-update.html",
+		"menuName": "User",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "User",
+		"title": "User",
+		"contentTitle": "User",
+		"contentSubTitle": "Update User",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "Update User"
+	},
+	{
+		"requestUrl": "profile-user-update-save",
+		"menuName": "User",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "User",
+		"title": "User",
+		"contentTitle": "User",
+		"contentSubTitle": "Update User",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "Update User"
+	},
+	{
+		"requestUrl": "profile-user-delete.html",
+		"menuName": "User",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "User",
+		"title": "User",
+		"contentTitle": "User",
+		"contentSubTitle": "User",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "User"
+	},
+	
+	{
+		"requestUrl": "profile-role.html",
+		"menuName": "Role",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "Role",
+		"title": "Role",
+		"contentTitle": "Role",
+		"contentSubTitle": "Role",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "Role"
+	},
+	{
+		"requestUrl": "profile-role-add.html",
+		"menuName": "Role",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "Role",
+		"title": "Role",
+		"contentTitle": "Role",
+		"contentSubTitle": "New Role",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "New Role"
+	},
+	{
+		"requestUrl": "profile-role-add-save",
+		"menuName": "Role",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "Role",
+		"title": "Role",
+		"contentTitle": "Role",
+		"contentSubTitle": "New Role",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "New Role"
+	},
+	{
+		"requestUrl": "profile-role-update.html",
+		"menuName": "Role",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "Role",
+		"title": "Role",
+		"contentTitle": "Role",
+		"contentSubTitle": "Update Role",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "Update Role"
+	},
+	{
+		"requestUrl": "profile-role-update-save",
+		"menuName": "Role",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "Role",
+		"title": "Role",
+		"contentTitle": "Role",
+		"contentSubTitle": "Update Role",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "Update Role"
+	},
+	{
+		"requestUrl": "profile-role-delete.html",
+		"menuName": "Role",
+		"menuGroupName": "Profile",
+		"menuSubGroupName": "Role",
+		"title": "Role",
+		"contentTitle": "Role",
+		"contentSubTitle": "Role",
+		"contentPath": "Profile",
+		"contentPathImage": "fa fa-user",
+		"contentSubPath": "Role"
+	},
+	
+	
+	{
+		"requestUrl": "course.html",
+		"menuName": "Course",
+		"menuGroupName": "Course",
+		"menuSubGroupName": "Course",
+		"title": "Course",
+		"contentTitle": "Course",
+		"contentSubTitle": "Course",
+		"contentPath": "Course",
+		"contentSubPath": "Course"
+	},
+	{
+		"requestUrl": "course-add.html",
+		"menuName": "Course",
+		"menuGroupName": "Course",
+		"menuSubGroupName": "Course",
+		"title": "Course",
+		"contentTitle": "Course",
+		"contentSubTitle": "Course",
+		"contentPath": "Course",
+		"contentSubPath": "Course"
+	},
+	{
+		"requestUrl": "course-update.html",
+		"menuName": "Course",
+		"menuGroupName": "Course",
+		"menuSubGroupName": "Course",
+		"title": "Course",
+		"contentTitle": "Course",
+		"contentSubTitle": "Course",
+		"contentPath": "Course",
+		"contentSubPath": "Course"
+	},
+	{
+		"requestUrl": "section.html",
+		"menuName": "Section",
+		"menuGroupName": "Section",
+		"menuSubGroupName": "Section",
+		"title": "Section",
+		"contentTitle": "Section",
+		"contentSubTitle": "Section",
+		"contentPath": "Section",
+		"contentSubPath": "Section"
+	},
+	{
+		"requestUrl": "section-add.html",
+		"menuName": "Section",
+		"menuGroupName": "Section",
+		"menuSubGroupName": "Section",
+		"title": "Section",
+		"contentTitle": "Section",
+		"contentSubTitle": "Section",
+		"contentPath": "Section",
+		"contentSubPath": "Section"
+	},
+	{
+		"requestUrl": "section-update.html",
+		"menuName": "Section",
+		"menuGroupName": "Section",
+		"menuSubGroupName": "Section",
+		"title": "Section",
+		"contentTitle": "Section",
+		"contentSubTitle": "Section",
+		"contentPath": "Section",
+		"contentSubPath": "Section"
+	}
+	
+]

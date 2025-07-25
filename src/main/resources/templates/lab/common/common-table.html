@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- Content Header (Page header) START -->
+<!-- Define all the Page related headers from Controller -->
+
+
+<body>
+
+  <!-- Common Table Start -->
+  <section class="col-lg-12" th:fragment="common-table">
+    <table class="table table-bordered table-striped table-hover" id="dataTable">
+      <thead>
+        <tr>
+          <th>Sl#</th>
+          <th>Print</th>
+          <th>Edit</th>
+          <th sec:authorize="hasAuthority('admin')">Del</th>
+          <th sec:authorize="hasAuthority('superadmin')">ID</th>
+          <!--   <th>RegId</th> -->
+          <th>Pt Id</th>
+          <th>Name</th>
+          <th>Sex</th>
+          <th>Age</th>
+          <th>Address</th>
+          <th>Contact No</th>
+          <th>Passport</th>
+          <th>User</th>
+          <th>DOB</th>
+          <th>NID</th>
+          <th>Test</th>
+          <th>Reg Date</th>
+          <th>Contact Person</th>
+          <th>Collection Type</th>
+          <th>Collected By</th>
+          <th>Fee</th>
+          <th>Created On</th>
+          <th>Total</th>
+          <th>Discount</th>
+          <th>Discount Reference</th>
+          <th>Paid</th>
+          <th>Mode</th>
+          <th>Due</th>
+          <th>PS</th>
+          <th>District</th>
+          <th>Flight No</th>
+          <th>Ticket No</th>
+          <th>VCN</th>
+          <th>Vaccine Name</th>
+          <th>1st Dose</th>
+          <th>2nd Dose</th>
+          <th>Update On</th>
+          <th>Update By</th>
+          <th sec:authorize="hasAuthority('superadmin')" >Agent ID</th>
+          <th sec:authorize="hasAuthority('admin')" >Agent Name</th>
+          <th sec:authorize="hasAuthority('superadmin')">UUID</th>
+          <th>ID No </th>
+          <th>ID Type</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="reg, itrReg : ${regList}">
+          <td th:text="${itrReg.index + 1}">Sl#  </td>
+          <td >
+            <!-- <a target="_blank" th:href="@{/money-receipt.html(id=${reg.id})}" 
+                class="btn btn-sm btn-warning" style="float:left"> <i class="fas fa-print"></i> </a> -->
+            <a target="popup" href="#" 
+                class="btn btn-sm btn-warning" style="float:left"
+                th:onclick="|window.open('@{/money-receipt.html(id=${reg.id})}','name','width=1000,height=600,top=100, left=100')|"> <i class="fas fa-print"></i> </a>
+          </td>
+          <!-- <a href="../html-link.htm" target="popup" onclick="window.open('../html-link.htm','name','width=600,height=400')">Open page in new window</a>
+		             -->
+          <td>
+            <a th:href="${reg.testInfoEntity.testName == 'rRT-PCR'} ? @{/pateint-update-rtpcr.html(id=${reg.id})}
+                : ( ${reg.testInfoEntity.testName == 'Immigrant'} ? @{/pateint-update-immigrant.html(id=${reg.id})}
+                : ( ${reg.testInfoEntity.testName == 'RAT'} ? @{/pateint-update-rat.html(id=${reg.id})} 
+                : ( ${reg.testInfoEntity.testName == 'Dope'} ? @{/pateint-update-dope.html(id=${reg.id})} 
+                : ( ${reg.testInfoEntity.testName == 'Antibody'} ? @{/pateint-update-antibody.html(id=${reg.id})} ))))"
+                class="btn btn-sm btn-primary" style="float:left"> <i class="fas fa-pencil-alt"></i> </a>
+          </td>
+          <td sec:authorize="hasAuthority('admin')">
+            <a th:href="${reg.testInfoEntity.testName == 'rRT-PCR'} ? @{/pateint-delete-rtpcr.html(regId=${reg.regId}, cat=${reg.testName})}
+                : ( ${reg.testInfoEntity.testName == 'Immigrant'} ? @{/pateint-delete-immigrant.html(regId=${reg.regId}, cat=${reg.testName})}
+                : ( ${reg.testInfoEntity.testName == 'RAT'} ? @{/pateint-delete-rat.html(regId=${reg.regId}, cat=${reg.testName})} 
+                : ( ${reg.testInfoEntity.testName == 'Dope'} ? @{/pateint-delete-dope.html(regId=${reg.regId}, cat=${reg.testName})} 
+                : ( ${reg.testInfoEntity.testName == 'Antibody'} ? @{/pateint-delete-antibody.html(regId=${reg.regId}, cat=${reg.testName})} ))))"
+                class="btn btn-sm btn-danger" style="float:left" 
+                onclick="return confirm('Do you confirm to delete this registration?');"> <i class="fa fa-trash" aria-hidden="true"></i> </a>
+          </td>
+          <td sec:authorize="hasAuthority('superadmin')" th:text="${reg.id}">ID  </td>
+          <td th:text="${reg.regId}">Pt Id  </td>
+          <td th:text="${reg.patient.patientName}">Name  </td>
+          <td th:text="${reg.patient.patientGender}">Sex  </td>
+          <td th:text="${reg.patient?.patientAge} ">Age  </td>
+          <td th:text="${reg?.address?.address}">Adress  </td>
+          <td th:text="${reg.patient.patientMajorContact}">Contact No  </td>
+          <td th:text="${reg.patient.patientPassport}">Passport  </td>
+          <td th:text="${reg.patient.createdBy}">User  </td>
+          <!--   <td th:text="${reg.patient.patientAge != null} ?  (${reg.patient.patientAge} + ' y')">Age  </td> -->
+          <td th:text="${#temporals.format(reg.patient?.patientDOB, 'dd/MM/yyyy')}">DOB  </td>
+          <td th:text="${reg.patient.patientNID}">NID  </td> 
+          <td th:text="${reg.testInfoEntity.testName}">Test  </td>
+          <td th:text="${#temporals.format(reg.regDate, 'dd-MMM-yyyy')}">Reg Date  </td>
+          <td th:text="${reg.patient.patientContactPerson}">Contact Person  </td>
+          <td th:text="${reg.testInfoEntity.sampleCollectionType}">Collection Type  </td>
+          <td th:text="${reg?.sampleCollectorName}">Collected By  </td>
+          <td th:text="${reg.testInfoEntity.regFee}">Fee  </td>
+          <td th:text="${#temporals.format(reg.patient.createdOn, 'dd-MMM-yyyy HH:mm:ss a')}">Created On  </td>
+          <td th:text="${reg.paymentEntity.netAmount}">Total  </td>
+          <td th:text="${reg.paymentEntity.discount}">Discount  </td>
+          <td th:text="${reg.paymentEntity.reference}">Discount Reference  </td>
+          <td th:text="${reg.paymentEntity.paidAmount}">Paid  </td>
+          <td th:text="${reg.paymentEntity.paymentMode}">Mode  </td>
+          <td th:text="${reg.paymentEntity.dueAmount}">Due  </td>
+        
+          <!-- null value checking for subdistrict and subdistrictName --> 
+          <td th:text="${reg?.subDistrict?.subDistrictName}">PS  </td> 
+          <!-- null value checking for district and districtName -->
+          <td th:text="${reg?.district?.districtName}">District  </td>
+          <td th:text="${reg?.flightInfoEntity?.flightNo}">Flight No  </td>
+          <td th:text="${reg?.flightInfoEntity?.ticketNo}">Ticket No  </td>
+          <td th:text="${reg?.vaccineInfoEntity?.vcn}">VCN  </td>
+          <td th:text="${reg?.vaccineInfoEntity?.vaccineName}">Vaccine Name  </td>
+          <td th:text="${#temporals.format(reg?.vaccineInfoEntity?.firstDoseDate, 'dd-MMM-yyyy')}">1st Dose  </td>
+          <td th:text="${#temporals.format(reg?.vaccineInfoEntity?.secondDoseDate, 'dd-MMM-yyyy')}">2nd Dose  </td>
+          <td th:text="${#temporals.format(reg.patient.updateOn, 'dd-MMM-yyyy HH:mm:ss a')}">Update On  </td>
+          <td th:text="${reg.patient.updatedBy}">Update By  </td>
+          <td sec:authorize="hasAuthority('superadmin')" th:text="${reg?.agentId}">Agent ID  </td>
+          <td sec:authorize="hasAuthority('admin')"th:text="${reg?.agentName}">Agent Name  </td>
+          <td sec:authorize="hasAuthority('superadmin')" th:text="${reg?.reguuid}">UUID  </td>
+          <th th:text="${reg.identityNo}">ID No </th>
+          <th th:text="${reg.identityType}">ID Type </th>
+          <th th:text="${reg.regRemarks}">Remarks </th>
+        </tr> 
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Sl#</th>
+          <th>Print</th>
+          <th>Edit</th>
+          <th sec:authorize="hasAuthority('admin')">Del</th>
+          <th sec:authorize="hasAuthority('superadmin')">ID</th>
+          <!--   <th>RegId</th> -->
+          <th>Pt Id</th>
+          <th>Name</th>
+          <th>Sex</th>
+          <th>Age</th>
+          <th>Address</th>
+          <th>Contact No</th>
+          <th>Passport</th>
+          <th>User</th>
+          <th>DOB</th>
+          <th>NID</th>
+          <th>Test</th>
+          <th>Reg Date</th>
+          <th>Contact Person</th>
+          <th>Collection Type</th>
+          <th>Collected By</th>
+          <th>Fee</th>
+          <th>Created On</th>
+          <th>Total</th>
+          <th>Discount</th>
+          <th>Discount Reference</th>
+          <th>Paid</th>
+          <th>Mode</th>
+          <th>Due</th>
+          <th>PS</th>
+          <th>District</th>
+          <th>Flight No</th>
+          <th>Ticket No</th>
+          <th>VCN</th>
+          <th>Vaccine Name</th>
+          <th>1st Dose</th>
+          <th>2nd Dose</th>
+          <th>Update On</th>
+          <th>Update By</th>
+          <th sec:authorize="hasAuthority('superadmin')" >Agent ID</th>
+          <th sec:authorize="hasAuthority('admin')" >Agent Name</th>
+          <th sec:authorize="hasAuthority('superadmin')">UUID</th>
+          <th>ID No </th>
+          <th>ID Type </th>
+          <th>Remarks </th>
+        </tr>
+      </tfoot>
+	</table>
+  </section>
+  <!-- Common Table END -->
+
+<script>
+
+</script>
+
+</body>
+</html>
+
+
+

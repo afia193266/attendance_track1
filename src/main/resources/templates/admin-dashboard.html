@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Head (all meta link scripts go here ) START -->
+<div th:replace="fragments/head :: head"></div>
+<head>
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <title> Dynamic Attendance Tracker System  </title>
+  <style>
+  	.small-box{
+  		/* text-align: center; */
+  		padding-top: 55px;
+  		/* height: 150px; */
+  	}
+  </style>
+</head>
+<body class="hold-transition sidebar-mini sidebar-collapse">
+<div class="wrapper">
+  <!-- TOP Menu (all meta link scripts go here ) START -->
+  <div th:replace="fragments/topmenu :: topmenu"></div>
+  <!-- TOP Menu (all meta link scripts go here ) END -->
+  <!-- Left side column. contains the sidebar START -->
+  <div th:replace="fragments/menusidebar :: menusidebar"></div>
+  <!-- Left side column. contains the sidebar END -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) START-->
+	<div th:replace="fragments/contentheader :: contentheader"></div>
+	<!-- Content Header (Page header) END-->
+	
+	<!--  ********  PLEASE DO NOT CHANGE ABOVE CODE ********* -->
+	
+	<!-- Main content START  -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== START -->
+    <section class="content">
+  	  <div class="small-box bg-red" sec:authorize="!hasAuthority('admin')">
+     	<div class="inner text-center" style="color: #FFF; font-weight:bold; font-family: 'Open Sans', sans-serif;">
+             <h4>
+             <i class="fas fa-skull-crossbones fa-lg"> </i>     
+             You don't have permission to this page.      
+             </h4>
+     	</div>
+      </div>
+      
+      
+      <div class="container-fluid" sec:authorize="hasAuthority('admin')">
+        <div class="row">
+            <div th:if="${successMessage != null}" class="col-lg-12 alert alert-success alert-dismissible fade show message" role="alert">
+			  <span th:text="${successMessage}"></span>
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div th:if="${errorMessage != null}" class="col-lg-12 alert alert-danger alert-dismissible fade show message" role="alert">
+			  <strong th:text="${errorMessage}"> </strong> 
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <!-- <a class="small-box bg-info" th:href="@{/pateint-reg.html(testCategory='rtpcr')}"> -->
+            <a class="small-box bg-info" href="/section.html">
+            
+              <div class="inner">
+                <!-- <p>Total 1500, today 50</p> -->
+                <!-- <i class="fas fa-book-medical fa-xl" style="font-size:36px;"></i> -->
+
+                <h1>Section <br/> <br/> </h1>
+
+                <!-- <p>1500</p> -->
+              </div>
+              <div class="icon">
+                <!-- <i class="ion ion-bag"></i> -->
+                <i class="icon ion-plus-circled"></i>
+              </div>
+              
+              <div class="small-box-footer">
+              	Enter <i class="fas fa-arrow-circle-right"></i>
+              </div>
+            </a>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <!-- <div class="small-box bg-success"> -->
+            
+            <a class="small-box bg-success" th:href="@{/course.html}">
+              <div class="inner">
+                <h1>Course <br/> <br/> </h1>
+
+                <!-- <p>1500</p> -->
+              </div>
+              <div class="icon">
+                <!-- <i class="ion ion-stats-bars"></i> -->
+                <i class="icon ion-plus-circled"></i>
+              </div>
+              
+              <div class="small-box-footer">
+              	Enter <i class="fas fa-arrow-circle-right"></i>
+              </div>
+            </a>
+            <!-- </div> -->
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+           <!--  <div class="small-box bg-warning"> -->
+            
+            <a class="small-box bg-warning" th:href="@{/profile-user.html}">
+              <div class="inner">
+                <h1>Profile <br/> <br/> </h1>
+
+                <!-- <p>1500</p> -->
+              </div>
+              <div class="icon">
+                <!-- <i class="ion ion-person-add"></i> -->
+                <i class="ion ion-person-add"></i>
+              </div>
+              
+              <div class="small-box-footer">
+              	Enter <i class="fas fa-arrow-circle-right"></i>
+              </div>
+            </a>
+            <!-- </div> -->
+          </div>
+          <!-- ./col -->
+          			
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <!-- <a class="small-box bg-info" th:href="@{/pateint-reg.html(testCategory='rtpcr')}"> -->
+            <a class="small-box bg-primary" href="/assign-course.html">
+            
+              <div class="inner">
+                <!-- <p>Total 1500, today 50</p> -->
+                <!-- <i class="fas fa-book-medical fa-xl" style="font-size:36px;"></i> -->
+
+                <h1>Assign Course (Teacher)  </h1>
+
+                <!-- <p>1500</p> -->
+              </div>
+              <div class="icon">
+                <!-- <i class="ion ion-bag"></i> -->
+                <i class="icon ion-plus-circled"></i>
+              </div>
+              
+              <div class="small-box-footer">
+              	Enter <i class="fas fa-arrow-circle-right"></i>
+              </div>
+            </a>
+          </div>
+          			
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <!-- <a class="small-box bg-info" th:href="@{/pateint-reg.html(testCategory='rtpcr')}"> -->
+            <a class="small-box bg-info" href="/assign-course-student.html">
+            
+              <div class="inner">
+                <!-- <p>Total 1500, today 50</p> -->
+                <!-- <i class="fas fa-book-medical fa-xl" style="font-size:36px;"></i> -->
+
+                <h1>Assign Course (Student) </h1>
+
+                <!-- <p>1500</p> -->
+              </div>
+              <div class="icon">
+                <!-- <i class="ion ion-bag"></i> -->
+                <i class="icon ion-plus-circled"></i>
+              </div>
+              
+              <div class="small-box-footer">
+              	Enter <i class="fas fa-arrow-circle-right"></i>
+              </div>
+            </a>
+          </div>
+
+			
+          <!-- ./col -->
+        </div>
+      <!--  /.row -->
+      </div>
+      <!--  /.container-fluid -->
+      
+    </section>
+    <!-- /.content -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== END-->
+	<!-- Main content END  -->
+	<!--  ********  PLEASE DO NOT CHANGE BELOW CODE ********* -->
+  </div>
+  <!-- /.content-wrapper -->
+  <!-- <footer class="main-footer">
+	   <div class="float-right d-none d-sm-block">
+	   	 Template Credit: AdminLTE.io
+	   </div>
+	   <strong>Copyright &copy; 2018-2021 <a href="http://zeroosoft.com/" style="color:#FF485A">Zeroosoft</a>.</strong> All rights
+	   reserved.
+  </footer> -->
+  <!-- Page footer START-->
+  <div th:replace="fragments/footer :: footer"></div>
+  <!-- Page footer END-->
+	
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- ===================##### Main contain goes here END ============================ -->
+
+<!-- =============================================== -->
+<!-- common script START -->
+<div th:replace="fragments/commonscripts :: commonscripts"></div>
+<!-- common script END -->
+<script type="text/javascript">	
+
+$(".message").fadeOut(10000, "linear");
+</script>
+
+</body>
+</html>

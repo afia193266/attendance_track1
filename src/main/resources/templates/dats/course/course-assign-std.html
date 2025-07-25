@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!-- Head (all meta link scripts go here ) START -->
+<div th:replace="fragments/head :: head"></div>
+<head>
+  <!-- Select2 -->
+  <link rel="stylesheet" href="resources/AdminLTE-master/plugins/select2/css/select2.min.css">
+  <title>Course Add</title>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+	<!-- TOP Menu (all meta link scripts go here ) START -->
+	<div th:replace="fragments/topmenu :: topmenu"></div>
+	<!-- TOP Menu (all meta link scripts go here ) END -->
+	<!-- Left side column. contains the sidebar START -->
+	<div th:replace="fragments/menusidebar :: menusidebar"></div>
+	<!-- Left side column. contains the sidebar END -->
+  	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+	<!-- Content Header (Page header) START-->
+	<div th:replace="fragments/contentheader :: contentheader"></div>
+	<!-- Content Header (Page header) END-->
+	
+	<!--  ********  PLEASE DO NOT CHANGE ABOVE CODE ********* -->
+	
+	<!-- Main content START  -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== START -->
+	<!-- Main content -->
+	<section class="content">
+		<div class="small-box bg-red" sec:authorize="!hasAuthority('admin')">
+	     	<div class="inner text-center" style="color: #FFF; font-weight:bold; font-family: 'Open Sans', sans-serif;">
+	             <h4>
+	             <i class="fas fa-skull-crossbones fa-lg"> </i>     
+	             You don't have permission to this page.      
+	             </h4>
+	     	</div>
+      	</div>
+		<div class="container-fluid" sec:authorize="hasAuthority('admin')">
+		    <div class="row">
+       			<div class="col-12">
+					<!-- Default box -->
+					<div class="card card-info">
+			            <div class="card-header">
+			              <h3 class="card-title"> Student Course Assignment </h3>
+			            </div>
+			            <div th:if="${successMessage != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+						  <span th:text="${successMessage}"></span>
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+						<div th:if="${errorMessage != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+						  <strong th:text="${errorMessage}">You should check in on some of those fields below.</strong> 
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						    <span aria-hidden="true">&times;</span>
+						  </button>
+						</div>
+			            <!-- /.card-header -->
+			            
+						<form class="form-horizontal" action="#" method="post" th:object="${studentCourse}"
+						 data-th-action="@{/find-courses}">
+                          <div class="card-body">
+                               
+	                        <div class="form-group row">
+	                          <label class="control-label col-lg-3 " for="studentId"><h5><b>Student : <span style="color: red;"> *</span>  </b></h5></label>
+	                          <select class="form-select form-select-lg select2 col-lg-4 " th:field="*{studentId}" required="required" th:errorclass="fieldError">
+                               <option th:each="student : ${studentList}"
+                                       th:value="${student.username}"
+                                       th:text="${student.name}">Student</option>
+	            		      </select>
+	                        </div> 
+	                        
+	                        <div class="form-group row"> 
+	                          <label class="control-label col-lg-3 " for="semester"><h5><b>Semester : <span style="color: red;"> *</span>  </b></h5></label>
+	                          <select class="form-select form-select-lg select2 col-lg-4 " th:field="*{semester}" required="required" >
+                               <option value="1">1</option> <option value="2">2</option>
+                               <option value="3">3</option> <option value="4">4</option>
+                               <option value="5">5</option> <option value="6">6</option>
+                               <option value="7">7</option> <option value="8">8</option>
+	            		      </select>
+	                        </div>
+	                        
+	                        <!--<div class="form-group row">
+	                          <label class="control-label col-lg-3 " for="studentId"><h5><b>Student : <span style="color: red;"> *</span>  </b></h5></label>
+	                          <select class="form-select form-select-lg select2 col-lg-4 " id="username" name="username" required="required">
+                               <option th:each="student : ${studentList}"
+                                       th:value="${student.username}"
+                                       th:text="${student.name}">Student</option>
+	            		      </select>
+	                        </div> 
+	                        
+	                        <div class="form-group row"> 
+	                          <label class="control-label col-lg-3 " for="semester"><h5><b>Semester : <span style="color: red;"> *</span>  </b></h5></label>
+	                           <select class="form-select form-select-lg select2 col-lg-4 " id="semester" name="semester" required="required" >
+                               <option value="1">1</option> <option value="2">2</option>
+                               <option value="3">3</option> <option value="4">4</option>
+                               <option value="5">5</option> <option value="6">6</option>
+                               <option value="7">7</option> <option value="8">8</option>
+	            		      </select>
+	                        </div>-->
+	                        
+		                      	<button type="submit" class="btn btn-lg btn-outline-success float-right" 
+		                      	name="action" value="save" >Search </button>
+	              
+                          </div>
+			              <!-- /.card-body -->
+			            </form>
+			            
+			            <form class="form-horizontal" action="#" method="post" th:object="${studentCourse}"
+						 data-th-action="@{/course-assign-student-save}">
+						 
+                            <input type="hidden" class="form-control" th:field="*{studentId}"/>
+						 
+						 <table class="table table-bordered" id="courseTable">
+							<thead>
+		                      <tr>
+		                        <th>Sl#</th>
+		                        <th style="display: none;">ID</th>
+		                        <th>Name</th>
+		                        <th>Code</th>
+		                        <th>Credit</th>
+		                        <th>Semester</th>
+		                        <th>Actions</th>
+		                      </tr>
+							</thead>
+							<tbody>
+		                      <tr th:each="course, itr : *{courseList}">
+		                        <td th:text="${itr.index+1}">Sl#</td>
+		                        <td style="display: none;">
+									<input type="hidden" th:field="*{courseList[__${itr.index}__].courseId}"
+								</td>
+		                        <td th:text="${course.courseName}">Name</td>
+		                        <td th:text="${course.courseCode}">Code</td>
+		                        <td th:text="${course.credit}">Credit</td>
+		                        <td th:text="${course.semester}">Semester</td>
+		                        <td >
+		                            <!--<a th:href="@{/course-update.html(id=${course.courseId})}" 
+		                              class="btn btn-sm btn-outline-warning" > <i class="fas fa-pencil-alt"></i>  Edit</a>
+		                            <a th:href="@{/course-delete.html(id=${course.courseId})}"
+		                               class="btn btn-sm btn-outline-danger" 
+		                               onclick="return confirm('Are you sure you want to delete this course?');"> 
+		                               <i class="fas fa-trash"></i> Delete</a>-->
+		                        </td >
+		                      </tr>
+							</tbody>
+							<tfoot>
+							  <tr>
+		                        <th>Sl#</th>
+		                        <th style="display: none;">ID</th>
+		                        <th>Name</th>
+		                        <th>Code</th>
+		                        <th>Credit</th>
+		                        <th>Semester</th>
+		                        <th>Actions</th>
+							  </tr>
+							</tfoot>
+						  </table>
+			            	
+				            <div class="card-footer row">
+		                      <div class="col-lg-6">
+							    <a class="btn btn-lg btn-outline-info float-left" href="course.html"> Back </a>
+		                      	<button type="submit" class="btn btn-lg btn-outline-success float-right" name="action" value="save" >Assign </button>
+		                      </div>
+		                      <div class="col-lg-3">
+							    <a class="btn btn-lg btn-outline-danger float-left" href="course.html"> Cancel </a>
+		                      </div>
+                            </div>
+                            <!-- /.box-footer -->
+						 
+			            </form>
+			            
+			          </div>
+			          <!-- /.card -->
+			          
+			            
+			    </div>
+       			<!-- /.col -->
+      		</div>
+      		<!-- /.row -->	
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+	<!--   ============ YOUR CODE WILL GO HERE =========== END-->
+	<!-- Main content END  -->
+	<!--  ********  PLEASE DO NOT CHANGE BELOW CODE ********* -->
+	</div>
+	<!-- /.content-wrapper -->
+  <!-- Page footer START-->
+  <div th:replace="fragments/footer :: footer"></div>
+  <!-- Page footer END-->
+	
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+<!-- ===================##### Main contain goes here END ============================ -->
+
+<!-- =============================================== -->
+<!-- common script START -->
+<div th:replace="fragments/commonscripts :: commonscripts"></div>
+<!-- common script END -->
+<!-- Select2 -->
+<script src="resources/AdminLTE-master/plugins/select2/js/select2.full.min.js"></script>
+<script type="text/javascript">
+
+	$(function () {
+	  //Initialize Select2 Elements
+	  $('.select2').select2()
+	});
+</script>
+</body>
+</html>
